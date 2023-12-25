@@ -1,0 +1,69 @@
+<!-- WARNING: this file is used only when running on GSI image (e.g. when running VTS/CTS on
+     GSI tests). The configuration in this file will be normally ignored.
+
+     Please use com.google.android.server.policy.TentModeDeviceStatePolicy for the actual
+     device states configurations.
+     -->
+<device-state-config>
+  <device-state>
+    <identifier>0</identifier>
+    <name>CLOSED</name>
+    <flags>
+      <flag>FLAG_CANCEL_OVERRIDE_REQUESTS</flag>
+    </flags>
+    <conditions>
+      <sensor>
+        <type>com.google.sensor.hall_effect</type>
+        <name>DRV5032 Hall Effect Sensor (wake-up)</name>
+        <value>
+          <min-inclusive>1</min-inclusive>
+          <max-inclusive>1</max-inclusive>
+        </value>
+      </sensor>
+      <sensor>
+        <type>android.sensor.hinge_angle</type>
+        <name>Hinge Angle (wake-up)</name>
+        <value>
+          <min-inclusive>0</min-inclusive>
+          <max>5</max>
+        </value>
+      </sensor>
+    </conditions>
+  </device-state>
+  <device-state>
+    <identifier>1</identifier>
+    <name>HALF_OPENED</name>
+    <conditions>
+      <sensor>
+        <type>android.sensor.hinge_angle</type>
+        <name>Hinge Angle (wake-up)</name>
+        <value>
+          <min-inclusive>5</min-inclusive>
+          <max-inclusive>120</max-inclusive>
+        </value>
+      </sensor>
+    </conditions>
+  </device-state>
+  <device-state>
+    <identifier>2</identifier>
+    <name>OPENED</name>
+  </device-state>
+
+  <device-state>
+    <identifier>3</identifier>
+    <name>REAR_DISPLAY_STATE</name>
+    <flags>
+      <flag>FLAG_EMULATED_ONLY</flag>
+    </flags>
+  </device-state>
+  <device-state>
+    <identifier>4</identifier>
+    <name>CONCURRENT_INNER_DEFAULT</name>
+    <flags>
+      <flag>FLAG_EMULATED_ONLY</flag>
+      <flag>FLAG_CANCEL_WHEN_REQUESTER_NOT_ON_TOP</flag>
+      <flag>FLAG_UNSUPPORTED_WHEN_THERMAL_STATUS_CRITICAL</flag>
+      <flag>FLAG_UNSUPPORTED_WHEN_POWER_SAVE_MODE</flag>
+    </flags>
+  </device-state>
+</device-state-config>

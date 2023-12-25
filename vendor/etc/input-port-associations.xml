@@ -1,0 +1,5 @@
+<ports>
+<port display="0" input="fts/input0" />
+<port display="0" input="fst2/input0" />
+<port display="1" input="fts_ext/input0" />
+</ports>

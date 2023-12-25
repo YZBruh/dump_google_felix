@@ -1,0 +1,82 @@
+{
+	"pipelines": [
+		{
+			"name": "inner",
+			"device": "/dev/touch_offload",
+			"algorithms": [
+				{
+					"class": "SegmentationAlgorithm",
+					"name": "segmentation",
+				},
+				{
+					"class": "GripSuppressionAlgorithm",
+					"name": "grip_suppression",
+					"blocked_by": ["segmentation"],
+					"parameters": {
+						"enableDebugLog": true,
+						"gripEnableCancel": true,
+						"palmEnableCancel": true
+					}
+				},
+				{
+					"class": "TouchflowAlgorithm",
+					"name": "touchflow",
+					"parameters": {
+						"requires_self_data": false,
+						"config": "/vendor/etc/touchflow_inner.pb"
+					},
+					"blocked_by": ["grip_suppression"],
+				},
+				{
+					"class": "ReportingAlgorithm",
+					"name": "reporting",
+					"blocked_by": ["touchflow"],
+				},
+				{
+					"class": "TouchSuezAlgorithm",
+					"name": "touchsuez",
+					"blocked_by": ["reporting"],
+				}
+			],
+		},
+		{
+			"name": "outer",
+			"device": "/dev/touch_offload_fts_ext",
+			"algorithms": [
+				{
+					"class": "SegmentationAlgorithm",
+					"name": "segmentation",
+				},
+				{
+					"class": "GripSuppressionAlgorithm",
+					"name": "grip_suppression",
+					"blocked_by": ["segmentation"],
+					"parameters": {
+						"enableDebugLog": true,
+						"gripEnableCancel": true,
+						"palmEnableCancel": true
+					}
+				},
+				{
+					"class": "TouchflowAlgorithm",
+					"name": "touchflow",
+					"parameters": {
+						"requires_self_data": false,
+						"config": "/vendor/etc/touchflow_outer.pb"
+					},
+					"blocked_by": ["grip_suppression"],
+				},
+				{
+					"class": "ReportingAlgorithm",
+					"name": "reporting",
+					"blocked_by": ["touchflow"],
+				},
+				{
+					"class": "TouchSuezAlgorithm",
+					"name": "touchsuez",
+					"blocked_by": ["reporting"],
+				}
+			],
+		}
+	]
+}
